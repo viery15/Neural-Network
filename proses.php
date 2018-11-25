@@ -7,37 +7,36 @@
  */
 
 
-
+$miu = random_float(-1,1);
 function random_float ($min,$max) {
     return ($min+lcg_value()*(abs($max-$min)));
 }
 
 function update_w($index_i,$error) {
-    $miu = random_float(-1,1);
-//    global $miu;
+    global $miu;
     global $w;
     global $input_sequence;
     for ($i=0;$i<3;$i++) {
-        $w_baru[$i] = $w[$i] + (($miu * $input_sequence[$index_i][$i]) * $error);
+        $w[$i] = $w[$i] + (($miu * $input_sequence[$index_i][$i]) * $error);
     }
-    return $w_baru;
+    return $w;
 }
 
 //input sequence
 $input_sequence = array(
     //input
-    array('1','0',0),
-    array('1','0',1),
-    array('1','1',0),
-    array('1','1',1),
+    array(1,0,0),
+    array(1,0,1),
+    array(1,1,0),
+    array(1,1,1),
 );
 
-$target = array('0','0','0','1');
-
+$target = array(0,0,0,1);
+//
 //for ($i=0;$i<3;$i++) {
 //    $w[$i] = random_float(-1,1);
 //}
-$w = array('-0.3','0.5','-0.4');
+$w = array(-0.3,0.5,-0.4);
 
 //training perceptron
 print_r($w);
@@ -50,20 +49,19 @@ for ($ii=0;$ii<100;$ii++) {
             $hasil[$i] += $sementara;
 //            $index_w = $j;
         }
-        if ($hasil[$i] < 0) {
+        if ($hasil[$i] <= 0) {
             $output[$i] = 0;
         }
-        else {
+        else if ($hasil > 0) {
             $output[$i] = 1;
         }
         $error = $output[$i] - $target[$i];
         if ($error != 0) {
             //unset($w);
             $w = update_w($i, $error);
-//            print_r($w);
         }
     }
     print_r($output);
+    print_r($w);
 //    print_r($hasil);
 }
-
