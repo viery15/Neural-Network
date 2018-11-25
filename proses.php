@@ -6,7 +6,7 @@
  * Time: 8:32 PM
  */
 
-
+$n = $_POST['n'];
 $miu = random_float(-1,1);
 function random_float ($min,$max) {
     return ($min+lcg_value()*(abs($max-$min)));
@@ -39,8 +39,8 @@ $target = array(0,0,0,1);
 $w = array(-0.3,0.5,-0.4);
 
 //training perceptron
-print_r($w);
-for ($ii=0;$ii<100;$ii++) {
+//print_r($w);
+for ($ii=0;$ii<$n;$ii++) {
 //    print_r($w);
     for ($i = 0; $i < 4; $i++) {
         $hasil[$i] = 0;
@@ -61,7 +61,10 @@ for ($ii=0;$ii<100;$ii++) {
             $w = update_w($i, $error);
         }
     }
-    print_r($output);
-    print_r($w);
+//    print_r($output);
+//    print_r($w);
+
+//    echo "<br><br>";
 //    print_r($hasil);
 }
+echo json_encode($output);
